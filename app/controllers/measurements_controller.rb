@@ -20,17 +20,43 @@ class MeasurementsController < ApplicationController
 
   def index
     user_id = params[:user_id]
+    summary = (params[:summary] and params[:summary] == "true")
     user = User.find(user_id)
-    if not user
-
-    end
     @measurements = user.measurements
 
-    respond_to do |format|
-      format.html
-      format.json {render json: @measurements}
-    end
+    if summary
+      puts "summary"
+      daily_data = Hash.new { |h,k| h[k] = [] }
+      for m in @measurements
+        k = m.date.strftime("%F")
+        daily_data[k] << m
+      end
+      days = daily_data.keys().sort()
+      result = []
+      for day in days
+        daily = daily_data[day]
+        temp = {"date" => day, "systolicbp"=>0, "diastolicbp"=>0, "pulse"=>0, "SPO2"=>0}
+        for meas in ["systolicbp", "diastolicbp", "pulse", "SPO2"]
+          values = daily.select { |d| !d[meas].nil?}.map { |d| d[meas] }
+          num = values.length
+          if num > 0
+            temp[meas] = values.inject {|sum, curr| sum+curr}/num
+          else
+            temp[meas] = nil
+          end
+        end
+        result << temp
+      end
 
+      respond_to do |format|
+        format.json {render json: @measurements}
+      end
+    else
+      respond_to do |format|
+        format.html
+        format.json {render json: @measurements}
+      end
+    end
   end
 
   def show
