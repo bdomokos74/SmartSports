@@ -14,6 +14,10 @@ class RRChart
     @width = $("#"+@chart_element+"-container").width()
     @height = @aspect*@width
 
+    zoom = d3.behavior.zoom()
+      .scaleExtent([1, 10])
+      .on("zoom", self.zoomed)
+
     total_height = @height
     if @crdata
       total_height *= 3
@@ -27,6 +31,9 @@ class RRChart
 
     chart1 = @svg
       .append("g")
+
+    @svg.call(zoom)
+
     chart2 = @svg
       .append("g")
       .attr("transform", "translate(0,"+(self.height)+")")
@@ -45,6 +52,11 @@ class RRChart
   clear: () ->
     $("svg."+@chart_element+"-chart-svg").html("")
 
+
+  zoomed: () ->
+    console.log "zoomeed"
+    d3.select("svg g").attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")")
+
   draw_plot: (chart, data, yAxisText="ms") ->
     self = this
     time_extent = d3.extent(data, (d) -> new Date(d.time))
@@ -60,6 +72,7 @@ class RRChart
     canvas = chart
       .append("g")
       .attr("transform", "translate("+self.margin.left+","+(self.margin.top)+")")
+
 
     time_axis = d3.svg.axis()
       .scale(time_scale)
