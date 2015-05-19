@@ -5,6 +5,10 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    puts current_user.email
+    if !current_user.admin
+      render(json: {msg: "failed"}, status: 403)
+    end
     @users = User.all
   end
 
