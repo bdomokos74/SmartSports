@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     resources :family_histories
     resources :lab_results
     resources :sensor_measurements
+    get 'analysis_data' => 'analysis_data#index'
     post 'upload'
   end
 
