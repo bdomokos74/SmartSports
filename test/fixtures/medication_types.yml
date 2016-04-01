@@ -1,0 +1,14 @@
+kalmopirin:
+  id: 1
+  category: oral
+  name: kalmopirin
+
+algopirin:
+  id: 2
+  category: oral
+  name: algopirin
+
+insulin:
+  id: 3
+  category: insulin
+  name: insulinA
