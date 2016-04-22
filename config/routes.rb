@@ -90,6 +90,8 @@ Rails.application.routes.draw do
     get 'pages/medication'
     get 'pages/lifestyle'
     get 'pages/genetics'
+    get 'pages/faq'
+    get 'pages/guide'
     get 'pages/customforms'
     get 'pages/analytics'
     get 'pages/profile'

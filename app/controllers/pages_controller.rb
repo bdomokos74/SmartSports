@@ -114,6 +114,14 @@ class PagesController < ApplicationController
     save_click_record(:success, nil, nil)
   end
 
+  def faq
+    save_click_record(:success, nil, nil)
+  end
+
+  def guide
+    save_click_record(:success, nil, nil)
+  end
+
   def analytics
     save_click_record(:success, nil, nil)
     if params[:user_id] && current_user.admin?
