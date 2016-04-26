@@ -61,7 +61,8 @@ function convertToHistory(data) {
     }
     var adata = data.filter(function(d) {return d['evt_type']!= 'waist';});
     var amap = {};
-    var k = new Set(adata.map(function (p) {
+    var k = new Set();
+    k.add(adata.map(function (p) {
         return moment(p['dates'][0]).format(moment_datefmt)
     }));
     k.forEach(function (v) {
