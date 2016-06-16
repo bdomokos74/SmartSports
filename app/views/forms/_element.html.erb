@@ -13,6 +13,7 @@
    initSelector = local_assigns.fetch(:locals, {})[:initSelector]
    customFormId = local_assigns.fetch(:locals, {})[:customFormId]
    resource = local_assigns.fetch(:locals, {})[:resource]
+   vertical = local_assigns.fetch(:locals, {})[:vertical]
    cfe = ""
    if eid!=nil
      cfe = "cfe-#{eid}"
@@ -23,6 +24,12 @@
    if buttonClass == nil
      buttonClass = ""
    end
+   if vertical == nil
+     vertical = false
+   else
+     vertical = true
+   end
+
    if resource == nil
      elNamePl = elementName.split('_')[0].pluralize
      elName = elementName.split('_')[0]
@@ -52,6 +59,9 @@
 </div>
 <% if separator %>
 <div class="dataFormSeparator <%= style %> <% if defaultHidden%>hidden<%end%> <%= elementName+'_elem'%>"></div>
+<% end %>
+<% if vertical %>
+    <div class="clearBoth"></div>
 <% end %>
 <% if initFn!=nil %>
     <script>
